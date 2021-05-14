@@ -5,12 +5,14 @@ const {
   addPost,
   deletePost,
   editPost,
-} = require("../Controller/PostController");
+} = require("../Controller/Controller");
+const { authChecker } = require("../AuthO/AuthCheck");
+const { authorizationChecker } = require("../AuthO/Authorization");
 
-Router.get("/post", getPost);
-Router.get("/post/:id", getPostById);
-Router.put("/editpost", editPost);
-Router.delete("/deletepost", deletePost);
-Router.post("/addpost", addPost);
+Router.get("/post", authChecker, getPost);
+Router.get("/post/:id", authChecker, getPostById);
+Router.put("/editpost/:id", authChecker, authorizationChecker, editPost);
+Router.delete("/deletepost/:id", authChecker, authorizationChecker, deletePost);
+Router.post("/addpost", authChecker, authorizationChecker, addPost);
 
 module.exports = Router;
